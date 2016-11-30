@@ -3,6 +3,10 @@ var canvas = document.getElementById('canvas'),
 
 var chosenSide = null;
 
+var gameStart = false;
+
+var game;
+
 var tY = 0,
     rY = 0,
 	tSpeed = 4,
@@ -15,6 +19,8 @@ var score = 0,
 	
 var directionImage = new Image();
 directionImage.src = 'images/direction.png';
+
+drawFirstFrame();
 
 function gameEngine() {
 
@@ -88,7 +94,11 @@ function gameEngine() {
 
 }
 
-var game = setInterval(gameEngine, 16);
+canvas.onmousedown = function() {
+	if(gameStart === false) {
+		startGame();
+	}
+}
 
 document.onkeydown = function(e) {
   if(e.keyCode === 37 || e.keyCode === 65) {
@@ -97,10 +107,41 @@ document.onkeydown = function(e) {
   if(e.keyCode === 39 || e.keyCode === 68) {
     chosenSide = 'right';
   }
-  if(e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) {
+  if((e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) && gameStart) {
 	  window.location.reload();
+  } else if((e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) && !gameStart) {
+	  startGame();
   }
   setTimeout(function() {
     chosenSide = null;
   }, 500);
 }
+
+function startGame() {
+	gameStart = true;
+	game = setInterval(gameEngine, 16);
+	document.getElementById('score').innerHTML = 'CURRENT SCORE: 0';
+}
+
+function drawFirstFrame() {
+	// New Frame
+  c.fillStyle = '#FFFFFF';
+  c.fillRect(0, 0, 800, 600);
+
+  // Center Line
+  c.beginPath();
+  c.moveTo(400, 0);
+  c.lineTo(400, 600);
+  c.lineWidth = 10;
+  c.stroke();
+
+  // Left Landing Pad (BLUE)
+  c.fillStyle = '#0000FF';
+  c.fillRect(0, 550, 395, 50);
+
+  // Right Landing Pad (RED)
+  c.fillStyle = '#CC0000';
+  c.fillRect(405, 550, 395, 50);
+}
+
+
