@@ -97,6 +97,12 @@ function gameEngine() {
 canvas.onmousedown = function() {
 	if(gameStart === false) {
 		startGame();
+	} else {
+		if(event.x > 400) {
+			chosenSide = 'right';
+		} else if(event.x < 400) {
+			chosenSide = 'left';
+		}
 	}
 }
 
