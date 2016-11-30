@@ -94,17 +94,21 @@ function gameEngine() {
 
 }
 
-canvas.onmousedown = function() {
+canvas.onmousedown = function( e ) {
 	if(gameStart === false) {
 		startGame();
-	} else {
-		if(event.x > 400) {
-			chosenSide = 'right';
-		} else if(event.x < 400) {
-			chosenSide = 'left';
-		}
 	}
+
+	if(e.pageX > window.innerWidth / 2) {
+		chosenSide = 'right';
+	} else if(e.pageX < window.innerWidth / 2) {
+		chosenSide = 'left';
+	}
+
 }
+
+
+
 
 document.onkeydown = function(e) {
   if(e.keyCode === 37 || e.keyCode === 65) {
@@ -149,5 +153,4 @@ function drawFirstFrame() {
   c.fillStyle = '#CC0000';
   c.fillRect(405, 550, 395, 50);
 }
-
 
