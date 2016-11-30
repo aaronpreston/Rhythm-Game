@@ -4,11 +4,14 @@ var canvas = document.getElementById('canvas'),
 var chosenSide = null;
 
 var tY = 0,
-    rY = 0;
+    rY = 0,
+	tSpeed = 4,
+	rSpeed = 5;
 
 var chosenLeft, chosenRight;
 
-var score = 0;
+var score = 0,
+	lastScore = 0;
 
 function gameEngine() {
 
@@ -39,27 +42,19 @@ function gameEngine() {
     c.fillStyle = '#CC3300';
     c.fillRect(405, 550, 395, 50);
   }
-
-  if(score < 10) {
-    tY += 5;
-    rY += 6;
-  }
-  if(score >= 10 && score < 30) {
-    tY += 8;
-    rY += 7;
-  }
-  if(score >= 30 && score < 50) {
-    tY += 10;
-    rY += 11;
-  }
-  if(score >= 50 && score < 60) {
-    tY += 13;
-    rY += 8;
-  }
-  if(score >= 60 && score < 65) {
-    tY += Math.floor(Math.random() * 20);
-    rY += Math.floor(Math.random() * 25);
-  }
+  
+	if(!(score === lastScore)) {
+		if(chosenSide === 'left') {
+		  tSpeed = Math.floor(Math.random() * 10) + 5;
+		} else if(chosenSide === 'right') {
+		  rSpeed = Math.floor(Math.random() * 10) + 5;
+		}
+		lastScore = score;
+	}
+  
+	tY += tSpeed;
+	rY += rSpeed;
+  
 
   c.fillStyle = '#000066';
   c.fillRect(0, tY, 395, 30);
@@ -70,21 +65,19 @@ function gameEngine() {
   if(chosenSide === 'left' && (tY) > 550) {
     score += 1;
     tY = 0;
-    document.getElementById('score').innerHTML = score;
+    document.getElementById('score').innerHTML = 'CURRENT SCORE: ' + score;
   }
   if(chosenSide === 'right' && (rY) > 550) {
     score += 1;
     rY = 0;
-    document.getElementById('score').innerHTML = score;
+    document.getElementById('score').innerHTML = 'CURRENT SCORE: ' + score;
   }
   if(chosenSide !== 'left' && (tY) > 600) {
-    score = 'YOU LOSE :(';
-    document.getElementById('score').innerHTML = score;
+    document.getElementById('score').innerHTML = 'FINAL SCORE: ' + score;
     clearInterval(game);
   }
   if(chosenSide !== 'right' && (rY) > 600) {
-    score = 'YOU LOSE :(';
-    document.getElementById('score').innerHTML = score;
+    document.getElementById('score').innerHTML = 'FINAL SCORE: ' + score;
     clearInterval(game);
   }
 
