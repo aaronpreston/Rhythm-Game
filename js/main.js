@@ -12,6 +12,9 @@ var chosenLeft, chosenRight;
 
 var score = 0,
 	lastScore = 0;
+	
+var directionImage = new Image();
+directionImage.src = 'images/direction.png';
 
 function gameEngine() {
 
@@ -25,6 +28,8 @@ function gameEngine() {
   c.lineTo(400, 600);
   c.lineWidth = 10;
   c.stroke();
+  
+  c.drawImage(directionImage, 0, 0)
 
   // Left Landing Pad (BLUE)
   c.fillStyle = '#0000FF';
