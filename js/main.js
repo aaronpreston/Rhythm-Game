@@ -91,11 +91,14 @@ function gameEngine() {
 var game = setInterval(gameEngine, 16);
 
 document.onkeydown = function(e) {
-  if(e.keyCode === 37) {
+  if(e.keyCode === 37 || e.keyCode === 65) {
     chosenSide = 'left';
   }
-  if(e.keyCode === 39) {
+  if(e.keyCode === 39 || e.keyCode === 68) {
     chosenSide = 'right';
+  }
+  if(e.keyCode === 13 || e.keyCode === 27 || e.keyCode === 32) {
+	  window.location.reload();
   }
   setTimeout(function() {
     chosenSide = null;
